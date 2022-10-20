@@ -1,5 +1,8 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv-safe');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv-safe';
+
+// const mongoose = require('mongoose');
+// const dotenv = require('dotenv-safe');
 
 dotenv.config();
 /* "mongodb://localhost:27017/" (nem com /users nem com /databaseName) nem o Atlas funcionou mais como localhost,
@@ -20,6 +23,4 @@ const connect = async () => {
   }
 };
 
-module.exports = {
-  connect
-};
+export default connect;

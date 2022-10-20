@@ -1,6 +1,10 @@
-const UserSchema = require('../models/userSchema');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+import UserSchema from '../models/userSchema.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+// const UserSchema = require('../models/userSchema');
+// const bcrypt = require('bcrypt');
+// const jwt = require('jsonwebtoken');
 
 const SECRET = process.env.SECRET;
 
@@ -92,9 +96,4 @@ const deleteUserById = async (req, res) => {
   }
 };
 
-module.exports = {
-  getAll,
-  createUser,
-  updateUserById,
-  deleteUserById
-};
+export { getAll, createUser, updateUserById, deleteUserById };
