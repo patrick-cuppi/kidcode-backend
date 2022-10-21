@@ -10,34 +10,52 @@ const SECRET = process.env.SECRET;
 
 //-----------Método GET-----------
 
-const getAll = async (req, res) => {
-  try {
-    const authHeader = req.get('authorization');
-    const token = authHeader.split(' ')[1];
-
-    if (!token) {
-      return res.status(401).send('Erro no header!');
+const getAllNoAuth = async (req, res) => {
+  UserSchema.find(function (err, users) {
+    if (err) {
+      res.status(500).send({ message: err.message });
     }
+    res.status(200).send(users);
+  });
+};
 
-    jwt.verify(token, SECRET, err => {
-      if (err) {
-        return res.status(401).send('Não autorizado!');
-      }
-    });
+const getAll = async (req, res) => {
+  const authHeader = req.get('authorization');
+  let token;
 
-    UserSchema.find(function (err, users) {
-      if (err) {
-        res.status(500).send({ message: err.message });
-      }
-      res.status(200).send(users);
-    });
-  } catch (error) {
-    //const users = await UserSchema.find({});
-    res.status(404).send({ error: error, message: 'usuário não autorizado' });
+  //se nao tivesse header quebrava a execução pois tentava utilizar o método split em undefined
+  if (authHeader) {
+    token = authHeader.split(' ')[1];
   }
+
+  if (!token) {
+    return res.status(401).send('Erro no header!');
+  }
+
+  //estava continuando a execução após o erro, tive que criar um verify token para parar a execução
+  let invalidToken = false;
+
+  jwt.verify(token, SECRET, err => {
+    if (err) {
+      invalidToken = true;
+      return res.status(403).send('Não autorizado!');
+    }
+  });
+
+  if (invalidToken) {
+    return;
+  }
+
+  UserSchema.find(function (err, users) {
+    if (err) {
+      res.status(500).send({ message: err.message });
+    }
+    res.status(200).send(users);
+  });
 };
 
 //----------Método POST----------
+//Devemos criar uma validação para criar usuário, o email não pode estar em uso
 const createUser = async (req, res) => {
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   req.body.password = hashedPassword;
@@ -96,4 +114,4 @@ const deleteUserById = async (req, res) => {
   }
 };
 
-export { getAll, createUser, updateUserById, deleteUserById };
+export { getAll, getAllNoAuth, createUser, updateUserById, deleteUserById };
