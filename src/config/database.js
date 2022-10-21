@@ -5,9 +5,6 @@ import dotenv from 'dotenv-safe';
 // const dotenv = require('dotenv-safe');
 
 dotenv.config();
-/* "mongodb://localhost:27017/" (nem com /users nem com /databaseName) nem o Atlas funcionou mais como localhost,
-porém o process.env. que ela utilizaou abaixo tbm não funciona,
-então ou ele funciona e o banco de dados fica desprotegido ou não funciona*/
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
