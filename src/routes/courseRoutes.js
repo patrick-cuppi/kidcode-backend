@@ -14,7 +14,7 @@ import { getCourses, createCourse } from '../controllers/courseController.js';
 const router = express.Router();
 
 router.get('/all', getCourses);
-router.post('/', createCourse);
+router.post('/create', createCourse);
 // router.get('/all', getAll);
 // router.post('/create', createUser);
 // router.post('/login', login);
