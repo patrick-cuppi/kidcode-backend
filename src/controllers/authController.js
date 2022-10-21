@@ -13,7 +13,8 @@ const login = (req, res) => {
     UserSchema.findOne({ email: req.body.email }, (error, user) => {
       if (!user) {
         return res.status(401).send({
-          message: 'Usuário não encontrado!',
+          //alterando a mensagem para não mostrar se é login ou password errado
+          message: 'Login não autorizado',
           email: `${req.body.email}`
         });
       }
@@ -25,7 +26,8 @@ const login = (req, res) => {
 
       if (!validPassword) {
         return res.status(401).send({
-          message: 'Login não autorizado!'
+          //alterando a mensagem para não mostrar se é login ou password errado
+          message: 'Login não autorizado'
         });
       }
 
