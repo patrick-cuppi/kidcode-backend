@@ -37,6 +37,19 @@ const createCourse = async (req, res) => {
   }
 };
 
+const getCourseById = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    const findCourse = await CourseSchema.findById(req.params.id);
+
+    res.status(200).json({
+      findCourse
+    });
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+};
+
 // const getAll = async (req, res) => {
 //   const authHeader = req.get('authorization');
 //   let token;
@@ -132,4 +145,4 @@ const createCourse = async (req, res) => {
 //   }
 // };
 
-export { getCourses, createCourse };
+export { getCourses, createCourse, getCourseById };
