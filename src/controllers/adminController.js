@@ -41,4 +41,40 @@ const createAdmin = async (req, res) => {
   }
 };
 
-export { getAllAdmins, createAdmin };
+const login = async (req, res) => {
+  try {
+    AdminSchema.findOne({ email: req.body.email }, (error, admin) => {
+      if (!admin) {
+        return res.status(401).send({
+          message: 'Login não autorizado'
+        });
+      }
+
+      const validPassword = bcrypt.compareSync(
+        req.body.password,
+        admin.password
+      );
+
+      if (!validPassword) {
+        return res.status(401).send({
+          //alterando a mensagem para não mostrar se é login ou password errado
+          message: 'Login não autorizado'
+        });
+      }
+
+      const token = jwt.sign({ name: admin.name }, SECRET);
+
+      res.status(200).send({
+        message: 'Login autorizado',
+        token
+      });
+    });
+  } catch (error) {
+    console.error(e);
+    res.status(400).json({
+      message: error.message
+    });
+  }
+};
+
+export { getAllAdmins, createAdmin, login };

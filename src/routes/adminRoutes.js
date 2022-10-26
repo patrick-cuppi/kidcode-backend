@@ -1,6 +1,10 @@
 import express from 'express';
 
-import { getAllAdmins, createAdmin } from '../controllers/adminController.js';
+import {
+  getAllAdmins,
+  createAdmin,
+  login
+} from '../controllers/adminController.js';
 
 // import { login } from '../controllers/authController.js';
 // import {
@@ -15,6 +19,7 @@ const router = express.Router();
 
 router.get('/all', getAllAdmins);
 router.post('/create', createAdmin);
+router.post('/login', login);
 // router.get('/all', getAll);
 // router.post('/create', createUser);
 // router.post('/login', login);
