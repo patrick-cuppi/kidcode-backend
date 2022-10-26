@@ -21,6 +21,9 @@ const courseSchema = new mongoose.Schema({
     smallDescription: { type: String },
     completeDescription: { type: String }
   },
+  image: {
+    type: String
+  },
   createdAt: {
     type: Date,
     default: new Date()
