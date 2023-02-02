@@ -1,10 +1,10 @@
-import express from 'express';
-import connectDb from './config/database.js';
-import cors from 'cors';
+import express from "express";
+import connectDb from "./config/database.js";
+import cors from "cors";
 
-import userRoutes from './routes/userRoutes.js';
-import courseRoutes from './routes/courseRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
+import userRoutes from "./routes/userRoutes.js";
+import courseRoutes from "./routes/courseRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 //const express = require('express');
 const app = express();
@@ -22,8 +22,8 @@ connectDb();
 
 app.use(cors());
 app.use(express.json());
-app.use('/users', userRoutes);
-app.use('/courses', courseRoutes);
-app.use('/admin', adminRoutes);
+app.use("/users", userRoutes);
+app.use("/courses", courseRoutes);
+app.use("/admin", adminRoutes);
 
 export default app;
